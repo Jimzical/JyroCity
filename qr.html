@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        #qrcode {
+            margin-top: 20px;
+        }
+    </style>
+
+    <!-- Include the qrcode.js library -->
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+</head>
+<body>
+    <!-- Input for the link -->
+    <input type="text" id="link" placeholder="Enter link here">
+
+    <!-- Button to generate the QR code -->
+    <button onclick="generateQRCode()">Generate QR Code</button>
+
+    <!-- Container for the QR code -->
+    <div id="qrcode"></div>
+
+    <script>
+        function generateQRCode() {
+            // Get the link from the input field
+            var link = document.getElementById('link').value;
+
+            // Generate the QR code
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: link,
+                width: 128,
+                height: 128,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+    </script>
+</body>
+</html>
