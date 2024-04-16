@@ -1,56 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Include Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <title>Phone</title>
-</head>
-<body>
-  <div class="container">
-    <!-- Use Bootstrap button classes -->
-    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-      <button id="phoneButton" class="btn btn-primary btn-lg mt-5">Press me</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Include Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <title>Phone</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Alpha</h5>
+              <p class="card-text" id="alpha">0</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Beta</h5>
+              <p class="card-text" id="beta">0</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Gamma</h5>
+              <p class="card-text" id="gamma">0</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <button id="toggleButton" class="btn btn-danger">Toggle</button>
+    </div>
 
-  <script>
-    const phoneButton = document.getElementById('phoneButton');
-    
-    // make sure there is no https here
-    const ngrokURL = 'a914-2409-40f2-39-2e2a-a83c-974-d4eb-58c2.ngrok-free.app';
-    const ws = new WebSocket(`wss://${ngrokURL}`);
+    <script>
+      const alphaElement = document.getElementById('alpha');
+      const betaElement = document.getElementById('beta');
+      const gammaElement = document.getElementById('gamma');
 
-    // TODO: This is temp while testing, for production use the above line with the correct ngrok URL
-    // const ws = new WebSocket(`ws://${window.location.host}`);
+      const ngrokURL = '16b2-2409-40f2-39-2e2a-a83c-974-d4eb-58c2.ngrok-free.app';
+      const ws = new WebSocket(`wss://${ngrokURL}`);
 
-    ws.onopen = () => {
-      console.log('WebSocket connection established');
-    };
+      let toggle = false;
+      let intervalId;
+      const toggleButton = document.getElementById('toggleButton');
 
-    ws.onmessage = (event) => {
-      console.log(`Received message from server: ${event.data}`);
-    };
+      toggleButton.addEventListener('click', () => {
+        toggle = !toggle;
+        toggleButton.className = toggle ? 'btn btn-success' : 'btn btn-danger';
 
-    let intervalId = null;
+        if (toggle) {
+          window.addEventListener('deviceorientation', handleOrientation);
+          intervalId = setInterval(sendOrientationData, 100);
+        } else {
+          window.removeEventListener('deviceorientation', handleOrientation);
+          clearInterval(intervalId);
+        }
 
-    phoneButton.addEventListener('mousedown', () => {
-      ws.send(JSON.stringify({ buttonPressed: true }));
-      intervalId = setInterval(() => {
-        ws.send(JSON.stringify({ buttonPressed: true }));
-      }, 100); // Send counter data every second
-    });
+        console.log(`Toggle is now: ${toggle}`);
+      });
 
-    phoneButton.addEventListener('mouseup', () => {
-      ws.send(JSON.stringify({ buttonPressed: false }));
-      clearInterval(intervalId);
-      intervalId = null;
-    });
-  </script>
+      let orientationData = {};
+      
+      function handleOrientation(event) {
+        orientationData = {
+          alpha: event.alpha,
+          beta: event.beta,
+          gamma: event.gamma,
+        };
+      
+        alphaElement.textContent = orientationData.alpha;
+        betaElement.textContent = orientationData.beta;
+        gammaElement.textContent = orientationData.gamma;
+      }
+      
+      function sendOrientationData() {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify(orientationData));
+        }
+      }
+    </script>
 
-  <!-- Include Bootstrap JS and its dependencies -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</body>
+    <!-- Include Bootstrap JS and its dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

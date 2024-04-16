@@ -9,19 +9,29 @@
 </head>
 <body>
   <div class="container">
-    <h1 class="text-center mt-5">Game Page</h1>
-    <p id="gameStatus" class="text-center mt-3">0</p>
+    <div class="row justify-content-center mt-5">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header text-center">
+            <h1>Game Page</h1>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center" id="alpha">Alpha: 0</h5>
+            <h5 class="card-title text-center" id="beta">Beta: 0</h5>
+            <h5 class="card-title text-center" id="gamma">Gamma: 0</h5>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
+  
   <script>
-    const gameStatus = document.getElementById('gameStatus');
-
-    // make sure there is no https here
-    const ngrokURL = 'a914-2409-40f2-39-2e2a-a83c-974-d4eb-58c2.ngrok-free.app';
-    const ws = new WebSocket(`wss://${ngrokURL}`);
+    const alphaElement = document.getElementById('alpha');
+    const betaElement = document.getElementById('beta');
+    const gammaElement = document.getElementById('gamma');
     
-    // TODO: This is temp while testing, for production use the above line with the correct ngrok URL
-    // const ws = new WebSocket(`ws://${window.location.host}`);
+    const ngrokURL = '16b2-2409-40f2-39-2e2a-a83c-974-d4eb-58c2.ngrok-free.app';
+    const ws = new WebSocket(`wss://${ngrokURL}`);
     
     ws.onopen = () => {
       console.log('WebSocket connection established');
@@ -29,9 +39,11 @@
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      if (data.buttonPressed !== undefined && data.counter !== undefined) {
-        // gameStatus.textContent = data.counter;
-        gameStatus.textContent = data.buttonPressed ? data.counter : 0;
+      console.log(data);
+      if (data.alpha !== undefined && data.beta !== undefined && data.gamma !== undefined) {
+        alphaElement.textContent = `Alpha: ${data.alpha}`;
+        betaElement.textContent = `Beta: ${data.beta}`;
+        gammaElement.textContent = `Gamma: ${data.gamma}`;
       }
     };
   </script>
