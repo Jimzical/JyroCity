@@ -1,9 +1,12 @@
+<!-- TODO: Make a basic navbar and make this page look nicer -->
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Main Website</title>
+    <title>Wii U Simulator</title>
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <style>
       body {
         padding: 2rem;
@@ -14,9 +17,16 @@
     </style>
   </head>
   <body>
-    <h1 class="text-center">Main Website</h1>
+    <h1 class="text-center">Wii U Simulator</h1>
     <div class="d-flex flex-column justify-content-center align-items-center" style="height: 80vh;">
-      <a href="/phone" target="_blank" class="btn btn-primary btn-lg">Phone Page</a>
+    
+      <div>
+        <h2 class="mb-4">Scan the QR to go to the required page with your phone</h2>
+      </div>
+
+      <a href="/phone" target="_blank">
+        <div id="qrcode"></div>
+      </a>
       <a href="/game" target="_blank" class="btn btn-primary btn-lg">Game Page</a>
     </div>
 
@@ -24,6 +34,11 @@
 
     <script>
       document.getElementById('url').textContent = window.location.href;
+      new QRCode(document.getElementById('qrcode'), {
+        text: window.location.href + 'phone',
+        width: 128,
+        height: 128
+      });
     </script>
 
     <!-- Bootstrap JS and its dependencies -->

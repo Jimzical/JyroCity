@@ -16,11 +16,12 @@
   <script>
     const gameStatus = document.getElementById('gameStatus');
 
-    // const ngrokURL = 'https://5516-1-6-222-154.ngrok-free.app';
-    // const ngrokURL = 'localhost:8000/';
-    // const ws = new WebSocket(`ws://${ngrokURL}`);
+    // make sure there is no https here
+    const ngrokURL = 'a914-2409-40f2-39-2e2a-a83c-974-d4eb-58c2.ngrok-free.app';
+    const ws = new WebSocket(`wss://${ngrokURL}`);
     
-    const ws = new WebSocket(`ws://${window.location.host}`);
+    // TODO: This is temp while testing, for production use the above line with the correct ngrok URL
+    // const ws = new WebSocket(`ws://${window.location.host}`);
     
     ws.onopen = () => {
       console.log('WebSocket connection established');
@@ -29,6 +30,7 @@
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.buttonPressed !== undefined && data.counter !== undefined) {
+        // gameStatus.textContent = data.counter;
         gameStatus.textContent = data.buttonPressed ? data.counter : 0;
       }
     };
