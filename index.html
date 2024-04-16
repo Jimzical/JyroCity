@@ -6,6 +6,14 @@
     <title>Device Orientation</title>
     <!-- Add Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('message', (message) => {
+            document.getElementById('content').textContent = message;
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -38,7 +46,7 @@
         </div>
     </div>
 
-    <div class="info text-center "></div>
+    <div class="content text-center ">hi</div>
 
     <script src="orientation.js"></script>
 </body>

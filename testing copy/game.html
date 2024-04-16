@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Game Page</title>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mt-5">Game Page</h1>
+    <p id="gameStatus" class="text-center mt-3">0</p>
+  </div>
+
+  <script>
+    const gameStatus = document.getElementById('gameStatus');
+
+    // const ngrokURL = 'https://5516-1-6-222-154.ngrok-free.app';
+    const ngrokURL = 'localhost:8000/';
+    const ws = new WebSocket(`ws://${ngrokURL}`);
+    
+    ws.onopen = () => {
+      console.log('WebSocket connection established');
+    };
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.buttonPressed !== undefined && data.counter !== undefined) {
+        gameStatus.textContent = data.buttonPressed ? data.counter : 0;
+      }
+    };
+  </script>
+
+  <!-- Include Bootstrap JS and its dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

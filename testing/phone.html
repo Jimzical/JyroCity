@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Phone</title>
+</head>
+<body>
+  <div class="container">
+    <!-- Use Bootstrap button classes -->
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+      <button id="phoneButton" class="btn btn-primary btn-lg mt-5">Press me</button>
+    </div>
+  </div>
+
+  <script>
+    const phoneButton = document.getElementById('phoneButton');
+    
+    // const ngrokURL = '99f2-1-6-222-154.ngrok-free.app';
+    // const ws = new WebSocket(`wss://${ngrokURL}`);
+
+    const ws = new WebSocket(`wss://${window.location.host}`);
+
+    ws.onopen = () => {
+      console.log('WebSocket connection established');
+    };
+
+    ws.onmessage = (event) => {
+      console.log(`Received message from server: ${event.data}`);
+    };
+
+    let intervalId = null;
+
+    phoneButton.addEventListener('mousedown', () => {
+      ws.send(JSON.stringify({ buttonPressed: true }));
+      intervalId = setInterval(() => {
+        ws.send(JSON.stringify({ buttonPressed: true }));
+      }, 100); // Send counter data every second
+    });
+
+    phoneButton.addEventListener('mouseup', () => {
+      ws.send(JSON.stringify({ buttonPressed: false }));
+      clearInterval(intervalId);
+      intervalId = null;
+    });
+  </script>
+
+  <!-- Include Bootstrap JS and its dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
