@@ -19,6 +19,7 @@
     // const ngrokURL = 'https://5516-1-6-222-154.ngrok-free.app';
     const ngrokURL = 'localhost:8000/';
     const ws = new WebSocket(`ws://${ngrokURL}`);
+    const ws = new WebSocket(`ws://${ngrokURL}`);
     
     ws.onopen = () => {
       console.log('WebSocket connection established');

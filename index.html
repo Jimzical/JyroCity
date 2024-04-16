@@ -1,53 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Device Orientation</title>
-    <!-- Add Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io();
-
-        socket.on('message', (message) => {
-            document.getElementById('content').textContent = message;
-        });
-    </script>
-</head>
-<body>
-    <div class="container">
-        <h1 class="text-center my-4">Device Orientation</h1>
-        <div class="row">
-            <div class="col-sm-4 my-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Alpha</h5>
-                        <p class="card-text"><span id="alpha"></span></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 my-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Beta</h5>
-                        <p class="card-text"><span id="beta"></span></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 my-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Gamma</h5>
-                        <p class="card-text"><span id="gamma"></span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<html>
+  <head>
+    <title>Main Website</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      body {
+        padding: 2rem;
+      }
+      .btn {
+        margin: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="text-center">Main Website</h1>
+    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 80vh;">
+      <a href="/phone" target="_blank" class="btn btn-primary btn-lg">Phone Page</a>
+      <a href="/game" target="_blank" class="btn btn-primary btn-lg">Game Page</a>
     </div>
 
-    <div class="content text-center ">hi</div>
+    <p id="url" class="text-center"></p>
 
-    <script src="orientation.js"></script>
-</body>
+    <script>
+      document.getElementById('url').textContent = window.location.href;
+    </script>
+
+    <!-- Bootstrap JS and its dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

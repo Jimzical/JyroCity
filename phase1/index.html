@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Orientation</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('message', (message) => {
+            document.getElementById('content').textContent = message;
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Device Orientation</h1>
+        <div class="row">
+            <div class="col-sm-4 my-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Alpha</h5>
+                        <p class="card-text"><span id="alpha"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 my-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Beta</h5>
+                        <p class="card-text"><span id="beta"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 my-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Gamma</h5>
+                        <p class="card-text"><span id="gamma"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content text-center ">hi</div>
+
+    <script src="orientation.js"></script>
+</body>
+</html>

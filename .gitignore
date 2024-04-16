@@ -2512,3 +2512,15 @@ testing copy/node_modules/ws/lib/subprotocol.js
 testing copy/node_modules/ws/lib/validation.js
 testing copy/node_modules/ws/lib/websocket-server.js
 testing copy/node_modules/ws/lib/websocket.js
+node_modules/cookie/SECURITY.md
+node_modules/debug/.coveralls.yml
+node_modules/debug/.eslintrc
+node_modules/debug/.npmignore
+node_modules/debug/.travis.yml
+node_modules/debug/CHANGELOG.md
+node_modules/debug/component.json
+node_modules/debug/karma.conf.js
+node_modules/debug/Makefile
+node_modules/debug/node.js
+node_modules/debug/src/debug.js
+node_modules/debug/src/inspector-log.js
