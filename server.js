@@ -27,7 +27,7 @@ app.get('/game', (req, res) => {
 
 // Handle WebSocket connections
 wss.on('connection', (ws) => {
-  console.log('New WebSocket connection');
+  console.log('New WebSocket connection from server.js');
 
   // Send the current button press state and counter value to the client
   ws.send(JSON.stringify({ buttonPressed, counter }));

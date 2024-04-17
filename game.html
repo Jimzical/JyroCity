@@ -17,14 +17,13 @@
     const gameStatus = document.getElementById('gameStatus');
 
     // make sure there is no https here
-    const ngrokURL = 'a914-2409-40f2-39-2e2a-a83c-974-d4eb-58c2.ngrok-free.app';
+    const ngrokURL = '1f7b-1-6-222-154.ngrok-free.app ';
     const ws = new WebSocket(`wss://${ngrokURL}`);
     
-    // TODO: This is temp while testing, for production use the above line with the correct ngrok URL
     // const ws = new WebSocket(`ws://${window.location.host}`);
     
     ws.onopen = () => {
-      console.log('WebSocket connection established');
+      console.log('WebSocket connection established from game page');
     };
 
     ws.onmessage = (event) => {
