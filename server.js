@@ -1,3 +1,4 @@
+const { log } = require('console');
 const express = require('express');
 const app = express();
 const port = 8000;
@@ -35,15 +36,32 @@ wss.on('connection', (ws) => {
   // Listen for messages from the client
   ws.on('message', (message) => {
     const data = JSON.parse(message);
-    let orientationData;
+  
+    let orientationData = { alpha: 0, beta: 0, gamma: 0 };
     if (data.buttonPressed !== undefined) {
       buttonPressed = data.buttonPressed;
       if (buttonPressed) {
         orientationData = data.orientationData;
+        orientationData.beta = orientationData.beta;
+        orientationData.gamma = orientationData.gamma;
+
+        orientationData.alpha -= 270;
+
+        if (orientationData.alpha < -180) {
+          orientationData.alpha = 360 + orientationData.alpha;
+        }
+
+
+        // orientationData.alpha = (orientationData.alpha + 90) % 360;
+        // if this value is above 180 subtract 180 from it
+        // if (orientationData.alpha > 180) {
+          // orientationData.alpha = orientationData.alpha - 180;
+        // }
       } else {
         orientationData = 0;
       }
-      console.log(`Button press state updated: ${buttonPressed}, data: ${data.orientationData.alpha}, ${data.orientationData.beta}, ${data.orientationData.gamma}`);
+
+      console.log(`data: ${data.orientationData.alpha}, ${data.orientationData.beta}, ${data.orientationData.gamma}`);
 
       // Broadcast the updated button press state and counter value to all connected clients
       wss.clients.forEach((client) => {
