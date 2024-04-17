@@ -16,36 +16,44 @@
   </div>
 
   <script>
-    const phoneButton = document.getElementById('phoneButton');
-    
-    // make sure there is no https here
-    const ngrokURL = '1f7b-1-6-222-154.ngrok-free.app ';
-    const ws = new WebSocket(`wss://${ngrokURL}`);
+      const phoneButton = document.getElementById('phoneButton');
+      
+      // make sure there is no https here
+      const ngrokURL = '1f7b-1-6-222-154.ngrok-free.app ';
+      const ws = new WebSocket(`wss://${ngrokURL}`);
+  
+      // const ws = new WebSocket(`ws://${window.location.host}`);
+  
+      ws.onopen = () => {
+        console.log('WebSocket connection established in phone page');
+      };
+  
+      ws.onmessage = (event) => {
+        console.log(`Received message from server: ${event.data}`);
+      };
+  
+      let buttonPressed = false;
+      const getCurrentTime = () => new Date().toLocaleTimeString();
+      phoneButton.addEventListener('click', () => {
+        buttonPressed = !buttonPressed;
 
-    // const ws = new WebSocket(`ws://${window.location.host}`);
+        phoneButton.style.backgroundColor = buttonPressed ? '#16f716' : 'red';
+        phoneButton.textContent = buttonPressed ? 'Game Started' : 'Game Paused';
 
-    ws.onopen = () => {
-      console.log('WebSocket connection established in phone page');
-    };
+        ws.send(JSON.stringify({ buttonPressed, time: getCurrentTime() }));
 
-    ws.onmessage = (event) => {
-      console.log(`Received message from server: ${event.data}`);
-    };
+        if (buttonPressed) {
+          
+          intervalId = setInterval(() => {
+            ws.send(JSON.stringify({ buttonPressed, time: getCurrentTime() }));
+            console.log('Data sent every 100ms' + getCurrentTime());
+          }, 100);
 
-    let intervalId = null;
-
-    phoneButton.addEventListener('mousedown', () => {
-      ws.send(JSON.stringify({ buttonPressed: true }));
-      intervalId = setInterval(() => {
-        ws.send(JSON.stringify({ buttonPressed: true }));
-      }, 100); // Send counter data every second
-    });
-
-    phoneButton.addEventListener('mouseup', () => {
-      ws.send(JSON.stringify({ buttonPressed: false }));
-      clearInterval(intervalId);
-      intervalId = null;
-    });
+        } else {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+      });
   </script>
 
   <!-- Include Bootstrap JS and its dependencies -->

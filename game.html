@@ -28,9 +28,9 @@
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      if (data.buttonPressed !== undefined && data.counter !== undefined) {
+      if (data.buttonPressed !== undefined && data.time !== undefined) {
         // gameStatus.textContent = data.counter;
-        gameStatus.textContent = data.buttonPressed ? data.counter : 0;
+        gameStatus.textContent = data.buttonPressed ? data.time : 0;
       }
     };
   </script>
