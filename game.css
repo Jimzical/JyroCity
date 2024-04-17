@@ -1,0 +1,9 @@
+/* remove scroll bars */
+body {
+    overflow: hidden;
+    margin: 0;
+}
+
+canvas { 
+    display: block;
+} 

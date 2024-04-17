@@ -5,6 +5,8 @@ const port = 8000;
 const path = require('path');
 const WebSocket = require('ws');
 
+app.use(express.static('public'));
+
 const wss = new WebSocket.Server({ server: app.listen(port) });
 console.log(`Server is running on http://localhost:${port}`);
 

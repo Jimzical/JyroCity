@@ -3,12 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game Page</title>
+
   <!-- Include Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <title>Game Page</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    body {
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
+  <!-- <div class="container">
     <h1 class="text-center mt-5">Game Page</h1>
     <div class="container">
         <table id="gameStatus" class="table table-striped table-bordered text-center mt-3">
@@ -27,35 +34,80 @@
             </tr>
           </tbody>
         </table>
-    </div>
+    </div> -->
 
-  <script>
-    const gameStatus = document.getElementById('gameStatus');
+  <!-- <script>
+    // Create a scene
+const scene = new THREE.Scene();
 
-    // make sure there is no https here
-    const ngrokURL = '1f7b-1-6-222-154.ngrok-free.app ';
-    const ws = new WebSocket(`wss://${ngrokURL}`);
-    
-    // const ws = new WebSocket(`ws://${window.location.host}`);
-    
-    ws.onopen = () => {
-      console.log('WebSocket connection established from game page');
-    };
+// Create a camera
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 10;
 
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.buttonPressed) {
-        document.getElementById('alpha').textContent = data.orientationData.alpha.toFixed(1);
-        document.getElementById('beta').textContent = data.orientationData.beta.toFixed(1);
-        document.getElementById('gamma').textContent = data.orientationData.gamma.toFixed(1);
-      } else {
-        document.getElementById('alpha').textContent = 0;
-        document.getElementById('beta').textContent = 0;
-        document.getElementById('gamma').textContent = 0;
-      }
-    };
-  </script>
+// Create a renderer
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
+// Create a wide and long but thin cube geometry
+const geometry = new THREE.BoxGeometry(40, 10, 0.5);
+
+// Create a material
+const material = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+
+// Create a mesh with the geometry and material
+const cube = new THREE.Mesh(geometry, material);
+cube.rotation.x = 90;
+
+// Add the cube to the scene
+scene.add(cube);
+
+// Create a light source
+const light = new THREE.PointLight(0xffffff, 1, 100);
+light.position.set(0, 0, 10);
+scene.add(light);
+
+// Create a WebSocket connection
+const ngrokURL = '1f7b-1-6-222-154.ngrok-free.app';
+const ws = new WebSocket(`wss://${ngrokURL}`);
+
+ws.onopen = () => {
+  console.log('WebSocket connection established from game page');
+};
+
+let gamma = 0;
+
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  console.log(data.orientationData.alpha, data.orientationData.beta, data.orientationData.gamma);
+  if (data.buttonPressed) {
+    gamma = data.orientationData.gamma;
+  } else {
+    gamma = 0;
+  }
+};
+
+// Render the scene
+function animate() {
+  requestAnimationFrame(animate);
+
+  // Use the gamma value to control the camera rotation
+  camera.rotation.z = gamma * 0.009;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+// Adjust renderer size on window resize
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+  </script> -->
+
+  <script type="module" src="script.js"></script>
   <!-- Include Bootstrap JS and its dependencies -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
