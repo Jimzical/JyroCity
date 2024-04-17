@@ -1,48 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Game Page</title>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Game Page</title>
 
-  <!-- Include Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://threejs.org/build/three.js"></script>
-  <style>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://threejs.org/build/three.js"></script>
+    <style>
     body {
       overflow: hidden;
     }
   </style>
-</head>
+  </head>
 
-<body>
-<script>
-
-  const NGROKURL = 'YOUR_NGROK(without the https//:)';
-  const ws = new WebSocket(`wss://${NGROKURL}`);
-
+  <body>
+    <script>
   // Declare orientation data variables
   let alpha = 0;
   let beta = 0;
   let gamma = 0;
   let buttonPressed = false;
-  // Handle incoming messages
-  ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    
-    if (data.buttonPressed) {
-      alpha = data.orientationData.alpha;
-      beta = data.orientationData.beta;
-      gamma = data.orientationData.gamma;
-      buttonPressed = data.buttonPressed;
 
-      // Now you can use alpha, beta, and gamma values
-      console.log(alpha, beta, gamma);
-    }
+   window.onload = function() {
+    fetch('/domain')
+      .then(response => response.text())
+      .then(domain => {
+        console.log(domain); // Log the domain
+
+        const ws = new WebSocket(`wss://${domain}`);
+  
+        
+        // Handle incoming messages
+        ws.onmessage = (event) => {
+          const data = JSON.parse(event.data);
+          
+          if (data.buttonPressed) {
+            alpha = data.orientationData.alpha;
+            beta = data.orientationData.beta;
+            gamma = data.orientationData.gamma;
+            buttonPressed = data.buttonPressed;
+
+            // Now you can use alpha, beta, and gamma values
+            console.log(alpha, beta, gamma);
+          }
+        };
+
+        // Rest of your code...
+      });
   };
-
   // Create a scene
   var scene = new THREE.Scene();
 
@@ -116,7 +127,7 @@
     requestAnimationFrame(animate);
 
     camera.rotation.y += alpha * 0.0001;
-    camera.rotation.x = beta * 0.01;
+    camera.rotation.x = beta * 0.05;
     camera.rotation.z = gamma * -0.01;
 
     if (buttonPressed) {
@@ -137,7 +148,8 @@
 
     <!-- Include Bootstrap JS and its dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  </body>
 
 </html>

@@ -22,19 +22,21 @@ npm install
 
 # How To Run
 
-1. Run Ngrok
+1. Put the path of ngrok in ngrokRunner.bat, example: `YOUR_PATH_TO_NGROK/ngrok.exe`
 ``` bash
-ngrok http 8000
+@echo off
+
+REM Set the path to the Ngrok executable
+set "ngrok_path=YOUR_PATH_TO_NGROK/ngrok.exe"
+
+REM Start Ngrok with the specified path and port in the background
+start "" "%ngrok_path%" http 8000
 ```
 
-2. Get the Ngrok URL and replace it in the game.html and phone.html (will make this better later on)
-``` js
-const NGROKURL = 'YOUR_NGROK(without the https//:)';
-const ws = new WebSocket(`wss://${NGROKURL}`);
-```
-3. Run the server
+
+2. Run runner.bat
 ``` bash
-node server.js
+./runner.bat
 ```
 
 # Using the Website
