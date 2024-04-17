@@ -21,34 +21,39 @@
       // make sure there is no https here
       const ngrokURL = '1f7b-1-6-222-154.ngrok-free.app ';
       const ws = new WebSocket(`wss://${ngrokURL}`);
-  
-      // const ws = new WebSocket(`ws://${window.location.host}`);
-  
+
       ws.onopen = () => {
         console.log('WebSocket connection established in phone page');
       };
-  
+
       ws.onmessage = (event) => {
         console.log(`Received message from server: ${event.data}`);
       };
-  
+
       let buttonPressed = false;
-      const getCurrentTime = () => new Date().toLocaleTimeString();
+      let orientationData = { alpha: 0, beta: 0, gamma: 0 };
+
+      if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', function(event) {
+          orientationData = {
+            alpha: event.alpha,
+            beta: event.beta,
+            gamma: event.gamma
+          };
+        });
+      }
+
       phoneButton.addEventListener('click', () => {
         buttonPressed = !buttonPressed;
-
         phoneButton.style.backgroundColor = buttonPressed ? '#16f716' : 'red';
         phoneButton.textContent = buttonPressed ? 'Game Started' : 'Game Paused';
-
-        ws.send(JSON.stringify({ buttonPressed, time: getCurrentTime() }));
+        ws.send(JSON.stringify({ buttonPressed, orientationData }));
 
         if (buttonPressed) {
-          
           intervalId = setInterval(() => {
-            ws.send(JSON.stringify({ buttonPressed, time: getCurrentTime() }));
-            console.log('Data sent every 100ms' + getCurrentTime());
+            ws.send(JSON.stringify({ buttonPressed, orientationData }));
+            // console.log(orientationData.alpha, orientationData.beta, orientationData.gamma);
           }, 100);
-
         } else {
           clearInterval(intervalId);
           intervalId = null;

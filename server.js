@@ -35,20 +35,20 @@ wss.on('connection', (ws) => {
   // Listen for messages from the client
   ws.on('message', (message) => {
     const data = JSON.parse(message);
-    let time;
+    let orientationData;
     if (data.buttonPressed !== undefined) {
       buttonPressed = data.buttonPressed;
       if (buttonPressed) {
-        time = data.time;
+        orientationData = data.orientationData;
       } else {
-        time = 0;
+        orientationData = 0;
       }
-      console.log(`Button press state updated: ${buttonPressed}, time: ${data.time}`);
+      console.log(`Button press state updated: ${buttonPressed}, data: ${data.orientationData.alpha}, ${data.orientationData.beta}, ${data.orientationData.gamma}`);
 
       // Broadcast the updated button press state and counter value to all connected clients
       wss.clients.forEach((client) => {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify({ buttonPressed, time }));
+          client.send(JSON.stringify({ buttonPressed, orientationData }));
         }
       });
     }
