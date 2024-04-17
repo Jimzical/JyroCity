@@ -10,12 +10,12 @@ Uses the `Gyroscope` of your phone to control the plane in the simulator which i
 
 # How To Intall
 1. Clone the repo
-```
+``` bash
 git clone https://github.com/Jimzical/Gyro-socket.git
 ```
 
 2. Install the dependencies
-```
+``` bash
 npm install
 ```
 
@@ -23,14 +23,17 @@ npm install
 # How To Run
 
 1. Run Ngrok
-```
+``` bash
 ngrok http 8000
 ```
 
 2. Get the Ngrok URL and replace it in the game.html and phone.html (will make this better later on)
-
-3. Run the server
+``` js
+const NGROKURL = 'YOUR_NGROK(without the https//:)';
+const ws = new WebSocket(`wss://${NGROKURL}`);
 ```
+3. Run the server
+``` bash
 node server.js
 ```
 

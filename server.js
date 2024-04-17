@@ -47,25 +47,20 @@ wss.on('connection', (ws) => {
         orientationData.beta = orientationData.beta;
         orientationData.gamma = orientationData.gamma;
 
+        // this logic is set up as alpha defaults to 270 whenever started
         orientationData.alpha -= 270;
 
         if (orientationData.alpha < -180) {
           orientationData.alpha = 360 + orientationData.alpha;
         }
 
-
-        // orientationData.alpha = (orientationData.alpha + 90) % 360;
-        // if this value is above 180 subtract 180 from it
-        // if (orientationData.alpha > 180) {
-          // orientationData.alpha = orientationData.alpha - 180;
-        // }
       } else {
         orientationData = 0;
       }
 
       console.log(`data: ${data.orientationData.alpha}, ${data.orientationData.beta}, ${data.orientationData.gamma}`);
 
-      // Broadcast the updated button press state and counter value to all connected clients
+      // Broadcast the updated button press state and orientation value to all connected clients
       wss.clients.forEach((client) => {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify({ buttonPressed, orientationData }));

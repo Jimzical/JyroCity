@@ -40,15 +40,14 @@
   
 
     <script>
-    const phoneButton = document.getElementById('phoneButton');
-    const alphaElement = document.getElementById('alpha');
-    const betaElement = document.getElementById('beta');
-    const gammaElement = document.getElementById('gamma');
+      const NGROKURL = 'YOUR_NGROK(without the https//:)';
+      const ws = new WebSocket(`wss://${NGROKURL}`);
 
-      // make sure there is no https here
-      const ngrokURL = '1f7b-1-6-222-154.ngrok-free.app ';
-      const ws = new WebSocket(`wss://${ngrokURL}`);
-
+      const phoneButton = document.getElementById('phoneButton');
+      const alphaElement = document.getElementById('alpha');
+      const betaElement = document.getElementById('beta');
+      const gammaElement = document.getElementById('gamma');
+      
       ws.onopen = () => {
         console.log('WebSocket connection established in phone page');
       };
