@@ -34,10 +34,9 @@ ngrok http 8000
 ```
 node server.js
 ```
-
-
-
-
+<p align="center">
+  <img src="https://github.com/Jimzical/Gyro-socket/assets/97384467/6b6168d6-eca2-41df-bf1e-d438c36c1c11">
+</p>
 
 # Future Plans
 - Add more features to the game.
