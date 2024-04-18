@@ -54,7 +54,10 @@ start "" "%ngrok_path%" http 8000
 5. Now click the button on your phone to start flying around!
 
 
+# Whats New
 
+- Imporved Code Structure
+- Created Scripts to run everything
 
 
 # Future Plans
@@ -63,6 +66,4 @@ start "" "%ngrok_path%" http 8000
   - Need to figure out how to add a plane model that are camera follows in 3rd person
   - Fix the sky with a Sky cube texture, currently facing some issues
 - Possibly make a Fruit Ninja game out of this
-- Refactor the code to look nicer
-- Fix the .env plan for storing the ngrok url
 - Make the index.html file look nicer (can use 3js here as well) and add a navbar
