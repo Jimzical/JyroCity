@@ -1,4 +1,7 @@
 @echo off
-call scripts/ngrokRunner.bat
-call scripts/ngrokUrl.bat
-node server.js
+
+REM Run the server code in the background
+start /B call scripts/serverRunner.bat
+
+REM Open the URL
+call scripts/websiteRunner.bat
