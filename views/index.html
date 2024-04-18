@@ -6,7 +6,6 @@
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <style>
       body {
         padding: 2rem;
@@ -32,14 +31,10 @@
 
     <p id="url" class="text-center"></p>
 
-    <script>
-      document.getElementById('url').textContent = window.location.href;
-      new QRCode(document.getElementById('qrcode'), {
-        text: window.location.href + 'phone',
-        width: 128,
-        height: 128
-      });
-    </script>
+
+    <!-- QR Code -->
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="/qr.js" type="application/javascript"></script>
 
     <!-- Bootstrap JS and its dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

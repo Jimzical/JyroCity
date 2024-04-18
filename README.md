@@ -22,19 +22,21 @@ npm install
 
 # How To Run
 
-1. Run Ngrok
+1. Put the path of ngrok in ngrokRunner.bat, example: `YOUR_PATH_TO_NGROK/ngrok.exe`
 ``` bash
-ngrok http 8000
+@echo off
+
+REM Set the path to the Ngrok executable
+set "ngrok_path=YOUR_PATH_TO_NGROK/ngrok.exe"
+
+REM Start Ngrok with the specified path and port in the background
+start "" "%ngrok_path%" http 8000
 ```
 
-2. Get the Ngrok URL and replace it in the game.html and phone.html (will make this better later on)
-``` js
-const NGROKURL = 'YOUR_NGROK(without the https//:)';
-const ws = new WebSocket(`wss://${NGROKURL}`);
-```
-3. Run the server
+
+2. Run runner.bat
 ``` bash
-node server.js
+./runner.bat
 ```
 
 # Using the Website
@@ -52,7 +54,10 @@ node server.js
 5. Now click the button on your phone to start flying around!
 
 
+# Whats New
 
+- Imporved Code Structure
+- Created Scripts to run everything
 
 
 # Future Plans
@@ -61,6 +66,4 @@ node server.js
   - Need to figure out how to add a plane model that are camera follows in 3rd person
   - Fix the sky with a Sky cube texture, currently facing some issues
 - Possibly make a Fruit Ninja game out of this
-- Refactor the code to look nicer
-- Fix the .env plan for storing the ngrok url
 - Make the index.html file look nicer (can use 3js here as well) and add a navbar
