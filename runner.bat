@@ -1,4 +1,4 @@
 @echo off
-call ngrokRunner.bat
-call ngrokUrl.bat
+call scripts/ngrokRunner.bat
+call scripts/ngrokUrl.bat
 node server.js

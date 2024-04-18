@@ -7,7 +7,7 @@ const WebSocket = require('ws');
 app.use(express.static('public'));
 
 const fs = require('fs');
-const URL = fs.readFileSync('url.txt', 'utf8');
+const URL = fs.readFileSync('scripts/url.txt', 'utf8');
 console.log(`URL: ${URL}`);
 
 const DOMAIN = URL.split('/')[2];
@@ -21,21 +21,20 @@ const wss = new WebSocket.Server({ server: app.listen(port) });
 // console.log(`Server is running on http://localhost:${port}`);
 
 let buttonPressed = false;
-let counter = 0;
 
 // Serve the main website
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
 // Serve the phone page
 app.get('/phone', (req, res) => {
-  res.sendFile(path.join(__dirname, 'phone.html'));
+  res.sendFile(path.join(__dirname, 'views/phone.html'));
 });
 
 // Serve the game page
 app.get('/game', (req, res) => {
-  res.sendFile(path.join(__dirname, 'game.html'));
+  res.sendFile(path.join(__dirname, 'views/game.html'));
 });
 
 // Handle WebSocket connections
