@@ -46,12 +46,10 @@
             gamma = data.orientationData.gamma;
             buttonPressed = data.buttonPressed;
 
-            // Now you can use alpha, beta, and gamma values
-            console.log(alpha, beta, gamma);
+            // console.log(alpha, beta, gamma);
           }
         };
 
-        // Rest of your code...
       });
   };
   // Create a scene
@@ -90,6 +88,7 @@
   const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
   const plane = new THREE.Mesh(planeGeometry, planeMaterial);
   plane.rotation.x = -Math.PI / 2;
+  plane.castShadow = true;
   plane.receiveShadow = true;
   scene.add(plane);
 
