@@ -43,7 +43,7 @@ wss.on('connection', (ws) => {
   console.log('New WebSocket connection from server.js');
 
   // Send the current button press state and counter value to the client
-  ws.send(JSON.stringify({ buttonPressed, counter }));
+  // ws.send(JSON.stringify({ buttonPressed, counter }));
 
   // Listen for messages from the client
   ws.on('message', (message) => {
