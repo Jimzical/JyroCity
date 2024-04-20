@@ -1,7 +1,6 @@
 @echo off
 
-call scripts/ngrokRunner.bat
-call scripts/ngrokUrl.bat
-for /f %%i in (scripts/url.txt) do set "NGROK_URL=%%i"
+timeout 5
 
+@REM Start the website
 start "" %NGROK_URL%

@@ -52,7 +52,7 @@ window.addEventListener('resize', function() {
 }, false);
 
 const spotlight = new THREE.SpotLight(0xffffff, 3);
-spotlight.position.set(55, 500, 200);
+spotlight.position.set(200, 400, 10);
 spotlight.castShadow = true;
 scene.add(spotlight);
 
@@ -103,12 +103,18 @@ function animate() {
   camera.rotation.x = beta * 0.05;
   camera.rotation.z = gamma * -0.01;
 
+  // TODO: Need to check how the rotation data works, looking itno it suggest that its -3.14 to 3.14 but values seem to be -9 to 9 so dunno whats goin on here. also apparatly gamma only goes -90 to 90 so need to check that too, cuase i hightly doubgt that
+
+  // console.log(alpha.toFixed(1), beta.toFixed(1), gamma.toFixed(1));
+  
+  console.log(camera.rotation.y.toFixed(1), camera.rotation.x.toFixed(1));
+
   if (buttonPressed) {
     // make the camera move in the direction it is facing
     camera.translateZ(-0.2);
   }
   else{
-    camera.translateZ(0);
+    // camera.translateZ(0);
   }
 
   // Render the scene

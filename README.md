@@ -1,3 +1,6 @@
+# ! Currently Broken, DO NOT PUSH
+
+
 # Gyro-Socket
 
 A sort of simple Wii U simulator that lets you use your phone as a Wii Remote to  fly around a city
