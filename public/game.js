@@ -60,7 +60,7 @@ scene.add(spotlight);
 scene.background = new THREE.Color(0x87ceeb);
 
 // Create a plane
-const planeGeometry = new THREE.PlaneGeometry(500, 500, 10, 10);
+const planeGeometry = new THREE.PlaneGeometry(1500, 1500, 10, 10);
 const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 plane.rotation.x = -Math.PI / 2;
@@ -99,20 +99,22 @@ for (let i = 0; i < 50; i++) {
 function animate() {
   requestAnimationFrame(animate);
 
-  camera.rotation.y += alpha * 0.0001;
-  camera.rotation.x = beta * 0.05;
-  camera.rotation.z = gamma * -0.01;
+  // Create a new Euler and set its values
+  var euler = new THREE.Euler(beta * 0.05, alpha * 0.05, gamma * -0.01, 'YXZ');
+
+  // Set the camera's quaternion from the Euler
+  camera.quaternion.setFromEuler(euler);
 
   if (buttonPressed) {
     // make the camera move in the direction it is facing
-    // camera.translateZ(-0.2);
-    camera.translateZ(0);
+    camera.translateZ(-0.2);
+    // camera.translateZ(0);
   }
   else{
     camera.translateZ(0);
   }
 
-  // Render the scene
+ 
   renderer.render(scene, camera);
 
   // log where the camera is looking
