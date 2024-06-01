@@ -130,47 +130,58 @@ for (let i = 0; i < 50; i++) {
   // Add the building to the scene
   scene.add(building);
 }
+// Log rotation data
+function logRotation() {
+  console.log(
+    camera.rotation.x.toFixed(2),
+    camera.rotation.y.toFixed(2),
+    camera.rotation.z.toFixed(2)
+  );
+}
 
-// Animation loop
-function animate() {
-  requestAnimationFrame(animate);
-
-  camera.rotation.y += alpha * 0.001;
-  camera.rotation.x = beta * 0.05;
-  camera.rotation.z = gamma * -0.01;
-  
-  // Check the gamma value and move the camera accordingly
-  if (gamma > 0.1) {
-    // If the phone is tilted to the right, move the camera to the right
-    camera.position.x += 0.1;
-  } else if (gamma < -0.1) {
-    // If the phone is tilted to the left, move the camera to the left
-    camera.position.x -= 0.1;
-  }
-
-
-
-  if (buttonPressed) {
-    // make the camera move in the direction it is facing
-    camera.translateZ(-0.2);
-  }
-  else{
-    camera.translateZ(0);
-  }
-  
-  renderer.render(scene, camera);
-
-  // log where the camera is looking
-  // console.log(
-  //   camera.rotation.x.toFixed(2), 
-  //   camera.rotation.y.toFixed(2), 
-  //   camera.rotation.z.toFixed(2)
-  // );  
+// Log the orientation data
+function logOrientation() {
   console.log(
     alpha.toFixed(2),
     beta.toFixed(2),
     gamma.toFixed(2)
   );  
 }
+
+// Animation loop
+function animate() {
+  requestAnimationFrame(animate);
+
+  // Convert degrees to radians
+  var alphaRad = alpha * (Math.PI / 180);
+  var betaRad = beta * (Math.PI / 180) * 0.01;
+  var gammaRad = gamma * (Math.PI / 180) * 0.01;
+
+  // Create a quaternion for the alpha rotation
+  var alphaQuaternion = new THREE.Quaternion();
+  alphaQuaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0), alphaRad * 0.01);
+
+  // Create a quaternion for the beta and gamma rotations
+  var betaGammaQuaternion = new THREE.Quaternion();
+  betaGammaQuaternion.setFromEuler(new THREE.Euler(betaRad, 0, -gammaRad, 'YXZ'));
+
+  // Apply the quaternions to the camera
+  camera.quaternion.multiplyQuaternions(camera.quaternion, betaGammaQuaternion);
+  camera.quaternion.multiplyQuaternions(camera.quaternion, alphaQuaternion);
+
+  if (buttonPressed) {
+    // make the camera move in the direction it is facing
+    camera.translateZ(-0.2);
+  }
+  else {
+    camera.translateZ(0);
+  }
+
+  renderer.render(scene, camera);
+
+  logRotation();
+
+}
+
 
 animate();
