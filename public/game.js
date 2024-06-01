@@ -68,6 +68,42 @@ plane.castShadow = true;
 plane.receiveShadow = true;
 scene.add(plane);
 
+// Load the font
+var loader = new THREE.FontLoader();
+loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font) {
+  // Create the text material
+  var textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+
+  // Directions and their positions
+  var directions = {
+    'N': new THREE.Vector3(0, 0, -750),
+    'S': new THREE.Vector3(0, 0, 750),
+    'E': new THREE.Vector3(750, 0, 0),
+    'W': new THREE.Vector3(-750, 0, 0)
+  };
+
+  for (var dir in directions) {
+    var textGeometry = new THREE.TextGeometry(dir, {
+      font: font,
+      size: 80,
+      height: 5,
+      curveSegments: 12,
+      bevelEnabled: true,
+      bevelThickness: 10,
+      bevelSize: 8,
+      bevelOffset: 0,
+      bevelSegments: 5
+    });
+
+    var text = new THREE.Mesh(textGeometry, textMaterial);
+    text.position.copy(directions[dir]);
+    text.position.y += 300; // placeing the text above the plane
+    text.lookAt(new THREE.Vector3(0, 0, 0));
+    scene.add(text);
+  }
+});
+
+
 // Create buildings
 for (let i = 0; i < 50; i++) {
   // Generate a random height, width, and depth for each building
@@ -98,9 +134,13 @@ for (let i = 0; i < 50; i++) {
 // Animation loop
 function animate() {
   requestAnimationFrame(animate);
+  // Convert degrees to radians
+  var alphaRad = alpha * (Math.PI / 180);
+  var betaRad = beta * (Math.PI / 180);
+  var gammaRad = gamma * (Math.PI / 180);
 
   // Create a new Euler and set its values
-  var euler = new THREE.Euler(beta * 0.05, alpha * 0.05, gamma * -0.01, 'YXZ');
+  var euler = new THREE.Euler(betaRad, alphaRad, -gammaRad, 'YXZ');
 
   // Set the camera's quaternion from the Euler
   camera.quaternion.setFromEuler(euler);
@@ -108,13 +148,11 @@ function animate() {
   if (buttonPressed) {
     // make the camera move in the direction it is facing
     camera.translateZ(-0.2);
-    // camera.translateZ(0);
   }
   else{
     camera.translateZ(0);
   }
-
- 
+  
   renderer.render(scene, camera);
 
   // log where the camera is looking
