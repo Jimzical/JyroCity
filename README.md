@@ -1,6 +1,6 @@
 # Gyro-Socket
 
-A sort of simple Wii U simulator that lets you use your phone as a Wii Remote to  fly around a city
+A fun game to Fly around a city using just your phone by scanning a QR code to connect to the website
 
 Uses the `Gyroscope` of your phone to control the plane in the simulator which is connected using `Sockets` and then the game is displayed on the website with the help of `Three.js`
 
