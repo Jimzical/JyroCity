@@ -134,16 +134,21 @@ for (let i = 0; i < 50; i++) {
 // Animation loop
 function animate() {
   requestAnimationFrame(animate);
-  // Convert degrees to radians
-  var alphaRad = alpha * (Math.PI / 180);
-  var betaRad = beta * (Math.PI / 180);
-  var gammaRad = gamma * (Math.PI / 180);
 
-  // Create a new Euler and set its values
-  var euler = new THREE.Euler(betaRad, alphaRad, -gammaRad, 'YXZ');
+  camera.rotation.y += alpha * 0.001;
+  camera.rotation.x = beta * 0.05;
+  camera.rotation.z = gamma * -0.01;
+  
+  // Check the gamma value and move the camera accordingly
+  if (gamma > 0.1) {
+    // If the phone is tilted to the right, move the camera to the right
+    camera.position.x += 0.1;
+  } else if (gamma < -0.1) {
+    // If the phone is tilted to the left, move the camera to the left
+    camera.position.x -= 0.1;
+  }
 
-  // Set the camera's quaternion from the Euler
-  camera.quaternion.setFromEuler(euler);
+
 
   if (buttonPressed) {
     // make the camera move in the direction it is facing
