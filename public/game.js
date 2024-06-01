@@ -1,3 +1,9 @@
+import * as THREE from "https://cdn.skypack.dev/three@0.129.0/build/three.module.js";
+import { GLTFLoader } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js";
+
+
+
+
 // Declare orientation data variables
 let alpha = 0;
 let beta = 0;
@@ -33,13 +39,38 @@ var scene = new THREE.Scene();
 
 // Create a camera
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(15, 100, 100);
+camera.position.set(-500, 100, 270);
+camera.rotation.set(0, -120, 0);  
 
 // Create a renderer and enable shadows
 var renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true; // Enable shadows in the renderer
 document.body.appendChild(renderer.domElement);
+
+// // -----------------------------------------------------
+// // TEMP
+// import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
+// // Create OrbitControls
+// var controls = new OrbitControls(camera, renderer.domElement);
+// controls.enableDamping = true; // optional, for smoother rotation
+// controls.dampingFactor = 0.25; // optional, damping factor for rotation
+// // -----------------------------------------------------
+
+// Create a CubeTextureLoader
+let sky_loader = new THREE.CubeTextureLoader();
+let textureCube = sky_loader.load([
+  'skybox/posx.jpg',
+  'skybox/negx.jpg',
+  'skybox/posy.jpg',
+  'skybox/negy.jpg',
+  'skybox/posz.jpg',
+  'skybox/negz.jpg'
+]);
+
+// Set the scene's background to the loaded texture
+scene.background = textureCube;
+
 
 // Handle window resize
 window.addEventListener('resize', function() {
@@ -51,17 +82,12 @@ window.addEventListener('resize', function() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }, false);
 
-const spotlight = new THREE.SpotLight(0xffffff, 3);
-spotlight.position.set(55, 500, 200);
-spotlight.castShadow = true;
-scene.add(spotlight);
-
-// make the background color light blue
-scene.background = new THREE.Color(0x87ceeb);
+const ambientLight = new THREE.AmbientLight(0xffffff, 1); // soft white light
+scene.add(ambientLight);
 
 // Create a plane
 const planeGeometry = new THREE.PlaneGeometry(1500, 1500, 10, 10);
-const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
+const planeMaterial = new THREE.MeshStandardMaterial({ color: '#02c436' });
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 plane.rotation.x = -Math.PI / 2;
 plane.castShadow = true;
@@ -103,33 +129,32 @@ loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json
   }
 });
 
+// Create a GLTF loader
+let model_loader = new GLTFLoader();
 
-// Create buildings
-for (let i = 0; i < 50; i++) {
-  // Generate a random height, width, and depth for each building
-  let height = Math.random() * 50 + 100;
-  let width = Math.random() * 20 + 10;
-  let depth = Math.random() * 20 + 10;
+model_loader.load(
+  'models/imaginary_city_i/scene.gltf',
+  // Called when the model has finished loading
+  function (gltf) {
+    // Scale the model
+    let scale = 10
+    gltf.scene.scale.set(scale, scale, scale); // Scale up by 2
 
-  // Create a box geometry for the building
-  let buildingGeometry = new THREE.BoxGeometry(width, height, depth);
+    // Add the model to the scene
+    scene.add(gltf.scene);
+  },
+  // Called while loading is progressing
+  function (xhr) {
+    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+  },
+  // Called when loading has errors
+  function (error) {
+    console.log('An error happened', error);
+  }
+);
 
-  // Generate a random color for each building
-  let buildingColor = new THREE.Color(0xffffff);
-  buildingColor.setHex(Math.random() * 0xffffff);
 
-  // Use the random color for the building material
-  let buildingMaterial = new THREE.MeshStandardMaterial({ color: buildingColor });
 
-  // Create the building and set its position
-  let building = new THREE.Mesh(buildingGeometry, buildingMaterial);
-  building.position.set(Math.random() * 500 - 250, height / 2, Math.random() * 500 - 250);
-  building.castShadow = true; // Enable shadows for the building
-  building.receiveShadow = true; // Enable shadows for the building
-
-  // Add the building to the scene
-  scene.add(building);
-}
 // Log rotation data
 function logRotation() {
   console.log(
@@ -177,9 +202,13 @@ function animate() {
     camera.translateZ(0);
   }
 
+  // TEMP --------------------------------------
+  // controls.update(); // required if controls.enableDamping or controls.autoRotate are set to true
+  // -------------------------------------------
+
   renderer.render(scene, camera);
 
-  logRotation();
+  // logRotation();
 
 }
 
