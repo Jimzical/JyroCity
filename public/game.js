@@ -105,7 +105,8 @@ function animate() {
 
   if (buttonPressed) {
     // make the camera move in the direction it is facing
-    camera.translateZ(-0.2);
+    // camera.translateZ(-0.2);
+    camera.translateZ(0);
   }
   else{
     camera.translateZ(0);
@@ -113,6 +114,18 @@ function animate() {
 
   // Render the scene
   renderer.render(scene, camera);
+
+  // log where the camera is looking
+  // console.log(
+  //   camera.rotation.x.toFixed(2), 
+  //   camera.rotation.y.toFixed(2), 
+  //   camera.rotation.z.toFixed(2)
+  // );  
+  console.log(
+    alpha.toFixed(2),
+    beta.toFixed(2),
+    gamma.toFixed(2)
+  );  
 }
 
 animate();

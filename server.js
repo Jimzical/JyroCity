@@ -67,7 +67,7 @@ wss.on('connection', (ws) => {
         orientationData = 0;
       }
 
-      console.log(`data: ${data.orientationData.alpha}, ${data.orientationData.beta}, ${data.orientationData.gamma}`);
+      // console.log(`data: ${data.orientationData.alpha}, ${data.orientationData.beta}, ${data.orientationData.gamma}`);
 
       // Broadcast the updated button press state and orientation value to all connected clients
       wss.clients.forEach((client) => {
