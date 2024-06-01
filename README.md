@@ -25,17 +25,7 @@ npm install
 
 # How To Run
 
-1. Put the path of ngrok in ngrokRunner.bat, example: `YOUR_PATH_TO_NGROK/ngrok.exe`
-``` bash
-@echo off
-
-REM Set the path to the Ngrok executable
-set "ngrok_path=YOUR_PATH_TO_NGROK/ngrok.exe"
-
-REM Start Ngrok with the specified path and port in the background
-start "" "%ngrok_path%" http 8000
-```
-
+1. Put the path of ngrok in `script/ngrokpath.txt`, example: `YOUR_PATH_TO_NGROK/ngrok.exe`
 
 2. Run runner.bat
 ``` bash
@@ -70,9 +60,9 @@ https://github.com/Jimzical/JyroCity/assets/97384467/404afc57-2804-4692-9fe5-0d0
 
 
 # Whats New
-
-- Imporved Code Structure
-- Created Scripts to run everything
+ - Fixed the sky using skycubes
+ - Imported actual models for the city and removed the placeholders
+ - Fixed Gimball effect and improved movement
 
 
 # Future Plans
