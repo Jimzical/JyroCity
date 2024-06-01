@@ -2,6 +2,6 @@
 
 call scripts/ngrokRunner.bat
 call scripts/ngrokUrl.bat
-for /f %%i in (scripts/url.txt) do set "NGROK_URL=%%i"
 
+set /p NGROK_URL=<scripts/url.txt
 start "" %NGROK_URL%
