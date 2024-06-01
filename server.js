@@ -6,10 +6,6 @@ const WebSocket = require('ws');
 
 app.use(express.static('public'));
 
-app.use('/models', function(req, res, next) {
-  res.setHeader('Cache-Control', 'public, max-age=3600'); // Set cache-control header for 1 hour
-  next();
-}, express.static('public/models'));
 
 const fs = require('fs');
 const URL = fs.readFileSync('scripts/url.txt', 'utf8');

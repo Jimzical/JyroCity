@@ -10,6 +10,7 @@ let beta = 0;
 let gamma = 0;
 let buttonPressed = false;
 
+// WebSocket connection
 window.onload = function() {
   fetch('/domain')
     .then(response => response.text())
@@ -67,7 +68,6 @@ let textureCube = sky_loader.load([
   'skybox/posz.jpg',
   'skybox/negz.jpg'
 ]);
-
 // Set the scene's background to the loaded texture
 scene.background = textureCube;
 
@@ -82,7 +82,9 @@ window.addEventListener('resize', function() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }, false);
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 1); // soft white light
+
+// Creating Lights
+const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);
 
 // Create a plane
@@ -211,6 +213,5 @@ function animate() {
   // logRotation();
 
 }
-
 
 animate();
