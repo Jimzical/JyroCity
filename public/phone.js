@@ -44,7 +44,7 @@ window.onload = function() {
                     intervalId = setInterval(() => {
                         ws.send(JSON.stringify({ buttonPressed, orientationData }));
                         // console.log(orientationData.alpha, orientationData.beta, orientationData.gamma);
-                    }, 1);
+                    }, 10);
                 } else {
                     clearInterval(intervalId);
                     intervalId = null;

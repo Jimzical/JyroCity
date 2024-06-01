@@ -60,13 +60,49 @@ scene.add(spotlight);
 scene.background = new THREE.Color(0x87ceeb);
 
 // Create a plane
-const planeGeometry = new THREE.PlaneGeometry(500, 500, 10, 10);
+const planeGeometry = new THREE.PlaneGeometry(1500, 1500, 10, 10);
 const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 plane.rotation.x = -Math.PI / 2;
 plane.castShadow = true;
 plane.receiveShadow = true;
 scene.add(plane);
+
+// Load the font
+var loader = new THREE.FontLoader();
+loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font) {
+  // Create the text material
+  var textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+
+  // Directions and their positions
+  var directions = {
+    'N': new THREE.Vector3(0, 0, -750),
+    'S': new THREE.Vector3(0, 0, 750),
+    'E': new THREE.Vector3(750, 0, 0),
+    'W': new THREE.Vector3(-750, 0, 0)
+  };
+
+  for (var dir in directions) {
+    var textGeometry = new THREE.TextGeometry(dir, {
+      font: font,
+      size: 80,
+      height: 5,
+      curveSegments: 12,
+      bevelEnabled: true,
+      bevelThickness: 10,
+      bevelSize: 8,
+      bevelOffset: 0,
+      bevelSegments: 5
+    });
+
+    var text = new THREE.Mesh(textGeometry, textMaterial);
+    text.position.copy(directions[dir]);
+    text.position.y += 300; // placeing the text above the plane
+    text.lookAt(new THREE.Vector3(0, 0, 0));
+    scene.add(text);
+  }
+});
+
 
 // Create buildings
 for (let i = 0; i < 50; i++) {
@@ -94,25 +130,58 @@ for (let i = 0; i < 50; i++) {
   // Add the building to the scene
   scene.add(building);
 }
+// Log rotation data
+function logRotation() {
+  console.log(
+    camera.rotation.x.toFixed(2),
+    camera.rotation.y.toFixed(2),
+    camera.rotation.z.toFixed(2)
+  );
+}
+
+// Log the orientation data
+function logOrientation() {
+  console.log(
+    alpha.toFixed(2),
+    beta.toFixed(2),
+    gamma.toFixed(2)
+  );  
+}
 
 // Animation loop
 function animate() {
   requestAnimationFrame(animate);
 
-  camera.rotation.y += alpha * 0.0001;
-  camera.rotation.x = beta * 0.05;
-  camera.rotation.z = gamma * -0.01;
+  // Convert degrees to radians
+  var alphaRad = alpha * (Math.PI / 180);
+  var betaRad = beta * (Math.PI / 180) * 0.01;
+  var gammaRad = gamma * (Math.PI / 180) * 0.01;
+
+  // Create a quaternion for the alpha rotation
+  var alphaQuaternion = new THREE.Quaternion();
+  alphaQuaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0), alphaRad * 0.01);
+
+  // Create a quaternion for the beta and gamma rotations
+  var betaGammaQuaternion = new THREE.Quaternion();
+  betaGammaQuaternion.setFromEuler(new THREE.Euler(betaRad, 0, -gammaRad, 'YXZ'));
+
+  // Apply the quaternions to the camera
+  camera.quaternion.multiplyQuaternions(camera.quaternion, betaGammaQuaternion);
+  camera.quaternion.multiplyQuaternions(camera.quaternion, alphaQuaternion);
 
   if (buttonPressed) {
     // make the camera move in the direction it is facing
     camera.translateZ(-0.2);
   }
-  else{
+  else {
     camera.translateZ(0);
   }
 
-  // Render the scene
   renderer.render(scene, camera);
+
+  logRotation();
+
 }
+
 
 animate();

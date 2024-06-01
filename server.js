@@ -41,9 +41,6 @@ app.get('/game', (req, res) => {
 wss.on('connection', (ws) => {
   console.log('New WebSocket connection from server.js');
 
-  // Send the current button press state and counter value to the client
-  // ws.send(JSON.stringify({ buttonPressed, counter }));
-
   // Listen for messages from the client
   ws.on('message', (message) => {
     const data = JSON.parse(message);
@@ -67,7 +64,7 @@ wss.on('connection', (ws) => {
         orientationData = 0;
       }
 
-      console.log(`data: ${data.orientationData.alpha}, ${data.orientationData.beta}, ${data.orientationData.gamma}`);
+      // console.log(`data: ${data.orientationData.alpha}, ${data.orientationData.beta}, ${data.orientationData.gamma}`);
 
       // Broadcast the updated button press state and orientation value to all connected clients
       wss.clients.forEach((client) => {
