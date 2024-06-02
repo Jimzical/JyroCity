@@ -69,6 +69,10 @@ start "" "%ngrok_path%" http 8000
 4. Then Click the Game button on the website
  <p align="center">
   <img src="https://github.com/Jimzical/Gyro-socket/assets/97384467/c0e9409a-6a67-4dda-bab5-42807147e51e">
+  <video width="640" height="480" controls>
+    <source src="example/gameplay.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 </p>
 5. Now click the button on your phone to start flying around!
 
