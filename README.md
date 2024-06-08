@@ -66,9 +66,4 @@ https://github.com/Jimzical/JyroCity/assets/97384467/404afc57-2804-4692-9fe5-0d0
 
 
 # Future Plans
-- Add more features to the game.
-  - Need to figure out how to import models, currenlty facing some issues
-  - Need to figure out how to add a plane model that are camera follows in 3rd person
-  - Fix the sky with a Sky cube texture, currently facing some issues
-- Possibly make a Fruit Ninja game out of this
-- Make the index.html file look nicer (can use 3js here as well) and add a navbar
+- Possibly make a FruitNinja like game out of this
