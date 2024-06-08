@@ -84,9 +84,9 @@ start "" "%ngrok_path%" http 8000
 
 
 # Future Plans
-- Add more features to the game.
-  - Need to figure out how to import models, currenlty facing some issues
-  - Need to figure out how to add a plane model that are camera follows in 3rd person
-  - Fix the sky with a Sky cube texture, currently facing some issues
-- Possibly make a Fruit Ninja game out of this
-- Make the index.html file look nicer (can use 3js here as well) and add a navbar
+- Possibly make a FruitNinja like game out of this
+- Add a loading screen while the game is loading
+- improve the image loading time
+- Add speed control to the plane
+- Add a pause game signal to pause the game
+- Improve the phone side UI

@@ -83,13 +83,24 @@ window.addEventListener('resize', function() {
 }, false);
 
 
-// Creating Lights
-const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+// // Creating Lights
+const ambientLight = new THREE.AmbientLight(0xffffff, 2);
 scene.add(ambientLight);
 
+
+// Load a texture
+const textureLoader = new THREE.TextureLoader();
+// const grassTexture = textureLoader.load('floor/grass.jpg');
+const grassTexture = textureLoader.load('floor/lower.png');
+
+// // Adjusting the repeat property
+// grassTexture.wrapS = THREE.RepeatWrapping;
+// grassTexture.wrapT = THREE.RepeatWrapping;
+// grassTexture.repeat.set(5, 5); // Adjust these values as needed
+
 // Create a plane
-const planeGeometry = new THREE.PlaneGeometry(1500, 1500, 10, 10);
-const planeMaterial = new THREE.MeshStandardMaterial({ color: '#02c436' });
+const planeGeometry = new THREE.PlaneGeometry(2048, 2048, 10, 10);
+const planeMaterial = new THREE.MeshStandardMaterial({ map: grassTexture, roughness: 3, metalness: 0 }); // Added roughness and metalness
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 plane.rotation.x = -Math.PI / 2;
 plane.castShadow = true;
