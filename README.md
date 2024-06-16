@@ -53,7 +53,11 @@ npm install
 
  
 
-https://github.com/Jimzical/JyroCity/assets/97384467/404afc57-2804-4692-9fe5-0d09da7a11c2
+
+https://github.com/Jimzical/JyroCity/assets/97384467/4b87a78d-1817-4574-b35c-01c18531348b
+
+
+
 
 
 5. Now click the button on your phone to start flying around!
