@@ -70,4 +70,5 @@ https://github.com/Jimzical/JyroCity/assets/97384467/4b87a78d-1817-4574-b35c-01c
 
 
 # Future Plans
+- Automate the ngrok path stuff
 - Possibly make a FruitNinja like game out of this
