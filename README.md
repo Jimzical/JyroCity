@@ -3,9 +3,7 @@
 </p>
 
 
-A fun game to Fly around a city using just your phone by scanning a QR code to connect to the website
-
-Uses the `Gyroscope` of your phone to control the plane in the simulator which is connected using `Sockets` and then the game is displayed on the website with the help of `Three.js`
+A website simulating the Wii Resort 'Island Flyover' game using `Three.js` and `WebSockets`. Users can connect their phones via QR code, using them as external Wii Remotes by leveraging the phone's `Gyroscope` to control the camera
 
 # Requirements
 - Node.js ([You can use this Link](https://nodejs.org/en/download))
