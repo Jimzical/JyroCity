@@ -6,20 +6,6 @@ const WebSocket = require('ws');
 
 app.use(express.static('public'));
 
-
-const fs = require('fs');
-const URL = fs.readFileSync('scripts/url.txt', 'utf8');
-console.log(`URL: ${URL}`);
-
-const DOMAIN = URL.split('/')[2];
-// console.log(`DOMAIN: ${DOMAIN}`);
-
-app.get('/domain', (req, res) => {
-  res.send(DOMAIN);
-});
-
-
-
 const wss = new WebSocket.Server({ server: app.listen(port) });
 // console.log(`Server is running on http://localhost:${port}`);
 

@@ -12,29 +12,25 @@ let buttonPressed = false;
 
 // WebSocket connection
 window.onload = function() {
-  fetch('/domain')
-    .then(response => response.text())
-    .then(domain => {
-      console.log(domain); // Log the domain
+  const domain = window.location.hostname;
+  console.log(domain); // Log the domain
 
-      const ws = new WebSocket(`wss://${domain}`);
+  const ws = new WebSocket(`wss://${domain}`);
 
-      // Handle incoming messages
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
+  // Handle incoming messages
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
 
-        if (data.buttonPressed) {
-          alpha = data.orientationData.alpha;
-          beta = data.orientationData.beta;
-          gamma = data.orientationData.gamma;
-          buttonPressed = data.buttonPressed;
+    if (data.buttonPressed) {
+      alpha = data.orientationData.alpha;
+      beta = data.orientationData.beta;
+      gamma = data.orientationData.gamma;
+      buttonPressed = data.buttonPressed;
 
-          // console.log(alpha, beta, gamma);
-        }
-      };
-    });
+      // console.log(alpha, beta, gamma);
+    }
+  };
 };
-
 // Create a scene
 var scene = new THREE.Scene();
 
