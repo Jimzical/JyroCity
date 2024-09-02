@@ -12,29 +12,25 @@ let buttonPressed = false;
 
 // WebSocket connection
 window.onload = function() {
-  fetch('/domain')
-    .then(response => response.text())
-    .then(domain => {
-      console.log(domain); // Log the domain
+  const domain = window.location.hostname;
+  console.log(domain); // Log the domain
 
-      const ws = new WebSocket(`wss://${domain}`);
+  const ws = new WebSocket(`wss://${domain}`);
 
-      // Handle incoming messages
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
+  // Handle incoming messages
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
 
-        if (data.buttonPressed) {
-          alpha = data.orientationData.alpha;
-          beta = data.orientationData.beta;
-          gamma = data.orientationData.gamma;
-          buttonPressed = data.buttonPressed;
+    if (data.buttonPressed) {
+      alpha = data.orientationData.alpha;
+      beta = data.orientationData.beta;
+      gamma = data.orientationData.gamma;
+      buttonPressed = data.buttonPressed;
 
-          // console.log(alpha, beta, gamma);
-        }
-      };
-    });
+      // console.log(alpha, beta, gamma);
+    }
+  };
 };
-
 // Create a scene
 var scene = new THREE.Scene();
 
@@ -83,13 +79,24 @@ window.addEventListener('resize', function() {
 }, false);
 
 
-// Creating Lights
-const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+// // Creating Lights
+const ambientLight = new THREE.AmbientLight(0xffffff, 2);
 scene.add(ambientLight);
 
+
+// Load a texture
+const textureLoader = new THREE.TextureLoader();
+// const grassTexture = textureLoader.load('floor/grass.jpg');
+const grassTexture = textureLoader.load('floor/lower.png');
+
+// // Adjusting the repeat property
+// grassTexture.wrapS = THREE.RepeatWrapping;
+// grassTexture.wrapT = THREE.RepeatWrapping;
+// grassTexture.repeat.set(5, 5); // Adjust these values as needed
+
 // Create a plane
-const planeGeometry = new THREE.PlaneGeometry(1500, 1500, 10, 10);
-const planeMaterial = new THREE.MeshStandardMaterial({ color: '#02c436' });
+const planeGeometry = new THREE.PlaneGeometry(2048, 2048, 10, 10);
+const planeMaterial = new THREE.MeshStandardMaterial({ map: grassTexture, roughness: 3, metalness: 0 }); // Added roughness and metalness
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 plane.rotation.x = -Math.PI / 2;
 plane.castShadow = true;

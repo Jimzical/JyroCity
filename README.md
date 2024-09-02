@@ -41,7 +41,13 @@ npm install
 </p>
 4. Then Click the Game button on the website
  <p align="center">
-<!--   <img src="https://github.com/Jimzical/Gyro-socket/assets/97384467/c0e9409a-6a67-4dda-bab5-42807147e51e"> -->
+
+  <img src="https://github.com/Jimzical/Gyro-socket/assets/97384467/c0e9409a-6a67-4dda-bab5-42807147e51e">
+  <video width="640" height="480" controls>
+    <source src="example/gameplay.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
 </p>
 
   <video width="640" height="480" controls>
@@ -68,5 +74,9 @@ https://github.com/Jimzical/JyroCity/assets/97384467/4b87a78d-1817-4574-b35c-01c
 
 
 # Future Plans
-- Automate the ngrok path stuff
 - Possibly make a FruitNinja like game out of this
+- Add a loading screen while the game is loading
+- improve the image loading time
+- Add speed control to the plane
+- Add a pause game signal to pause the game
+- Improve the phone side UI
