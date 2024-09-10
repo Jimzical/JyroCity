@@ -23,9 +23,7 @@ npm install
 
 # How To Run
 
-1. Put the path of ngrok in `script/ngrokpath.txt`, example: `YOUR_PATH_TO_NGROK/ngrok.exe`
-
-2. Run runner.bat
+Run runner.bat
 ``` bash
 ./runner.bat
 ```
