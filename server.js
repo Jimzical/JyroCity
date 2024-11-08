@@ -28,7 +28,7 @@ app.get('/game', (req, res) => {
 
 // Handle WebSocket connections
 wss.on('connection', (ws) => {
-  console.log('New WebSocket connection from server.js');
+  console.log('New WebSocket connection to server');
 
   // Listen for messages from the client
   ws.on('message', (message) => {
